@@ -1,0 +1,66 @@
+1️⃣ views.py 
+
+from django.shortcuts import render
+import requests
+
+def home(request):
+    url = "https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070?format=json&limit=5"
+    try:
+        data = requests.get(url).json().get('records', [])
+    except:
+        data = []
+    return render(request, 'index.html', {'data': data})
+
+
+
+2️⃣ urls.py
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.home, name='home'),
+]
+
+
+
+
+3️⃣ templates/index.html 
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MGNREGA Dashboard</title>
+  <style>
+    body { font-family: Arial; text-align: center; background: #f9f9f9; }
+    table { margin: auto; border-collapse: collapse; width: 80%; }
+    th, td { border: 1px solid #ccc; padding: 8px; }
+    th { background: #007acc; color: white; }
+  </style>
+</head>
+<body>
+  <h2>MGNREGA District Data</h2>
+  <table>
+    <tr><th>District</th><th>Work Done</th><th>People Benefited</th></tr>
+    {% for item in data %}
+      <tr>
+        <td>{{ item.district_name }}</td>
+        <td>{{ item.work_completed|default:"N/A" }}</td>
+        <td>{{ item.households|default:"N/A" }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+</body>
+</html>
+
+
+---
+
+4️⃣ mgnrega/urls.py (main project folder) Paste this:
+
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('dashboard'))
