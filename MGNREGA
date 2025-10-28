@@ -1,0 +1,24 @@
+# MGNREGA – Our Voice, Our Rights
+
+This is my small Django project made for the Bharat Digital Fellowship task.  
+It shows how each district is performing in the MGNREGA scheme using open data from the Government of India.
+
+# Purpose
+Many rural people cannot easily access or understand MGNREGA data online.  
+So, I made a simple site where they can just choose their district and see basic details like:
+- Person days generated  
+- Households worked  
+- Total wages paid  
+
+# How it works
+The project collects data from the official API (data.gov.in) and stores it in a local file (`data.json`)  
+so the website still works even if the API goes down.
+
+# tech used
+- Python  
+- Django Framework  
+- HTML and a bit of CSS  
+
+
+# How to run
+1. Install Django and Requests
